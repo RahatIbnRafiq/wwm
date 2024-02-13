@@ -10,6 +10,8 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   final TextEditingController _controller = TextEditingController();
 
+  final items = List.generate(50, (index) => index);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +33,24 @@ class _HomepageState extends State<Homepage> {
                   },
                 ),
               ),
-              onSubmitted: (String value) {},
+              onSubmitted: (String value) {
+                // print("Hello!!!! This was submitted: " + value);
+              },
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: items.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  final item = items[index];
+                  return ListTile(
+                    title: Text('Item $item'),
+                    subtitle: const Text('This is a subtitle'),
+                    onTap: () {},
+                    trailing: const Icon(Icons.chevron_right_outlined),
+                  );
+                },
+              ),
             ),
           ],
         ),
