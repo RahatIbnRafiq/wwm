@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wwm/service/wiki_service.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -11,6 +12,11 @@ class _HomepageState extends State<Homepage> {
   final TextEditingController _controller = TextEditingController();
 
   final items = List.generate(50, (index) => index);
+
+  loadUser() async {
+    final results = await WikiService().getUser();
+    print(results.length);
+  }
 
   @override
   Widget build(BuildContext context) {

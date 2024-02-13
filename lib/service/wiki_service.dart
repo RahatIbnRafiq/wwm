@@ -36,3 +36,22 @@ class User {
     );
   }
 }
+
+class WikiService {
+  Future<List<User>> getUser() async {
+    final response = await http
+        .get(Uri.parse("https://randomuser.me/api/?results=30&seed=galaxy"));
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+
+      final List<User> userList = [];
+      for (var entry in data['results']) {
+        userList.add(User.fromJson(entry));
+      }
+      return userList;
+    } else {
+      throw Exception('HTTP Request Failed!');
+    }
+  }
+}
