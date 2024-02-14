@@ -1,6 +1,9 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:wwm/constants.dart' as constants;
+import 'package:wwm/sensitive.dart' as sensitive;
+
 class Name {
   final String firstname;
   final String lastname;
@@ -37,6 +40,22 @@ class User {
 
 class WikiService {
   Future<List<User>> getUser(String searchString) async {
+    var url = Uri.https(constants.wikimediaBaseURL, constants.searchEndpoint, {
+      'q': searchString,
+      //'limit': constants.numberOfResults,
+    });
+    var wikiResponse = await http.get(url, headers: {
+      'User-Agent': sensitive.appName,
+      'Authorization': sensitive.accessToken,
+    });
+
+    if (wikiResponse.statusCode == 200) {
+      print(json.decode(wikiResponse.body));
+    } else {
+      print('Failed to load data from Wikimedia: ' +
+          wikiResponse.statusCode.toString());
+    }
+
     final response = await http.get(
         Uri.parse("https://randomuser.me/api/?results=30&seed=$searchString"));
 
