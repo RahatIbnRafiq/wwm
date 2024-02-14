@@ -11,11 +11,17 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   final TextEditingController _controller = TextEditingController();
 
-  final items = List.generate(50, (index) => index);
+  late Future<List<User>> futureUsers;
 
-  loadUser() async {
-    final results = await WikiService().getUser();
-    print(results.length);
+  Future<List<User>> loadUser(String searchString) async {
+    final results = await WikiService().getUser(searchString);
+    return results;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    futureUsers = Future.value([]);
   }
 
   @override
@@ -39,25 +45,39 @@ class _HomepageState extends State<Homepage> {
                   },
                 ),
               ),
-              onSubmitted: (String value) {
-                // print("Hello!!!! This was submitted: " + value);
+              onSubmitted: (String searchString) {
+                setState(() {
+                  futureUsers = loadUser(searchString);
+                });
               },
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: items.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  final item = items[index];
-                  return ListTile(
-                    title: Text('Item $item'),
-                    subtitle: const Text('This is a subtitle'),
-                    onTap: () {},
-                    trailing: const Icon(Icons.chevron_right_outlined),
+                child: FutureBuilder<List<User>>(
+              future: futureUsers,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
                   );
-                },
-              ),
-            ),
+                } else if (snapshot.hasError) {
+                  return Text("Error: ${snapshot.error}");
+                } else if (snapshot.hasData) {
+                  return ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      User user = snapshot.data![index];
+                      return ListTile(
+                        title: Text(user.name.firstname),
+                        subtitle: Text(user.email),
+                        trailing: const Icon(Icons.chevron_right_outlined),
+                      );
+                    },
+                  );
+                } else {
+                  return const Text('No data found');
+                }
+              },
+            )),
           ],
         ),
       ),

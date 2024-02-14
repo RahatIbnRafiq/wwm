@@ -1,8 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-// https://randomuser.me/api/?results=20
-
 class Name {
   final String firstname;
   final String lastname;
@@ -38,9 +36,9 @@ class User {
 }
 
 class WikiService {
-  Future<List<User>> getUser() async {
-    final response = await http
-        .get(Uri.parse("https://randomuser.me/api/?results=30&seed=galaxy"));
+  Future<List<User>> getUser(String searchString) async {
+    final response = await http.get(
+        Uri.parse("https://randomuser.me/api/?results=30&seed=$searchString"));
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
