@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:wwm/service/wiki_service.dart';
+import 'package:wwm/constants.dart' as constants;
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -11,24 +13,27 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   final TextEditingController _controller = TextEditingController();
 
-  late Future<List<User>> futureUsers;
+  late Future<List<Entity>> futureEntities;
 
-  Future<List<User>> loadUser(String searchString) async {
-    final results = await WikiService().getUser(searchString);
+  Future<List<Entity>> loadEntities(String searchString) async {
+    print("homepage: 1");
+    final results = await WikiService().getEntities(searchString);
+    print("homepage: 2");
     return results;
   }
 
   @override
   void initState() {
     super.initState();
-    futureUsers = Future.value([]);
+    print("homepage: 3");
+    futureEntities = Future.value([]);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Walk With Me'),
+        title: const Text(constants.appTitle),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -37,7 +42,7 @@ class _HomepageState extends State<Homepage> {
             TextField(
               controller: _controller,
               decoration: InputDecoration(
-                labelText: 'Search!',
+                labelText: constants.searchBarLabelText,
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.clear),
                   onPressed: () {
@@ -47,13 +52,14 @@ class _HomepageState extends State<Homepage> {
               ),
               onSubmitted: (String searchString) {
                 setState(() {
-                  futureUsers = loadUser(searchString);
+                  print("homepage: 4");
+                  futureEntities = loadEntities(searchString);
                 });
               },
             ),
             Expanded(
-                child: FutureBuilder<List<User>>(
-              future: futureUsers,
+                child: FutureBuilder<List<Entity>>(
+              future: futureEntities,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
@@ -62,13 +68,15 @@ class _HomepageState extends State<Homepage> {
                 } else if (snapshot.hasError) {
                   return Text("Error: ${snapshot.error}");
                 } else if (snapshot.hasData) {
+                  print("homepage: 5");
                   return ListView.builder(
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
-                      User user = snapshot.data![index];
+                      Entity entity = snapshot.data![index];
+                      print("homepage: 6");
                       return ListTile(
-                        title: Text(user.name.firstname),
-                        subtitle: Text(user.email),
+                        title: Text(entity.title),
+                        subtitle: Text(entity.shortDescription),
                         trailing: const Icon(Icons.chevron_right_outlined),
                       );
                     },
