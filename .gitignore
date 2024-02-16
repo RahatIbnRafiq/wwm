@@ -25,6 +25,5 @@ doc/api/
 
 .flutter-plugins
 .flutter-plugins-dependencies
-sensitive.dart
 .DS_Store
 token.txt
