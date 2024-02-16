@@ -16,16 +16,13 @@ class _HomepageState extends State<Homepage> {
   late Future<List<Entity>> futureEntities;
 
   Future<List<Entity>> loadEntities(String searchString) async {
-    print("homepage: 1");
     final results = await WikiService().getEntities(searchString);
-    print("homepage: 2");
     return results;
   }
 
   @override
   void initState() {
     super.initState();
-    print("homepage: 3");
     futureEntities = Future.value([]);
   }
 
@@ -52,7 +49,6 @@ class _HomepageState extends State<Homepage> {
               ),
               onSubmitted: (String searchString) {
                 setState(() {
-                  print("homepage: 4");
                   futureEntities = loadEntities(searchString);
                 });
               },
@@ -68,21 +64,20 @@ class _HomepageState extends State<Homepage> {
                 } else if (snapshot.hasError) {
                   return Text("Error: ${snapshot.error}");
                 } else if (snapshot.hasData) {
-                  print("homepage: 5");
                   return ListView.builder(
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       Entity entity = snapshot.data![index];
-                      print("homepage: 6");
                       return ListTile(
-                        title: Text(entity.title),
-                        subtitle: Text(entity.shortDescription),
+                        title: Text(entity.title ?? constants.titleUnavilable),
+                        subtitle: Text(entity.shortDescription ??
+                            constants.descriptionUnavilable),
                         trailing: const Icon(Icons.chevron_right_outlined),
                       );
                     },
                   );
                 } else {
-                  return const Text('No data found');
+                  return const Text(constants.noDataFound);
                 }
               },
             )),
