@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:wwm/service/wiki_service.dart';
 import 'package:wwm/constants.dart' as constants;
+import 'package:wwm/widgets/search_result.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -68,11 +69,10 @@ class _HomepageState extends State<Homepage> {
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       Entity entity = snapshot.data![index];
-                      return ListTile(
-                        title: Text(entity.title ?? constants.titleUnavilable),
-                        subtitle: Text(entity.shortDescription ??
-                            constants.descriptionUnavilable),
-                        trailing: const Icon(Icons.chevron_right_outlined),
+                      return SearchResult(
+                        title: entity.title ?? constants.titleUnavilable,
+                        subtitle: entity.shortDescription ??
+                            constants.descriptionUnavilable,
                       );
                     },
                   );
