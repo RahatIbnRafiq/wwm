@@ -73,6 +73,10 @@ class _HomepageState extends State<Homepage> {
                         title: entity.title ?? constants.titleUnavilable,
                         subtitle: entity.shortDescription ??
                             constants.descriptionUnavilable,
+                        onAdd: () async {
+                          await Future.delayed(const Duration(seconds: 2));
+                          print('Item $index added to the playlist');
+                        },
                       );
                     },
                   );
