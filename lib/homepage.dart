@@ -15,9 +15,10 @@ class _HomepageState extends State<Homepage> {
   final TextEditingController _controller = TextEditingController();
 
   late Future<List<Entity>> futureEntities;
+  final wikiservice = WikiService();
 
   Future<List<Entity>> loadEntities(String searchString) async {
-    final results = await WikiService().getEntities(searchString);
+    final results = await wikiservice.getEntities(searchString);
     return results;
   }
 
@@ -74,8 +75,7 @@ class _HomepageState extends State<Homepage> {
                         subtitle: entity.shortDescription ??
                             constants.descriptionUnavilable,
                         onAdd: () async {
-                          await Future.delayed(const Duration(seconds: 2));
-                          print('Item $index added to the playlist');
+                          await wikiservice.getEntityDetails(entity);
                         },
                       );
                     },
