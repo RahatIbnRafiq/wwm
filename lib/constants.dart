@@ -7,5 +7,6 @@ const String titleUnavilable = "No title is available";
 const String descriptionUnavilable = "No description is available";
 const String noDataFound = "No data found";
 const String addToPlaylist = "Add this to the playlist";
+const String rootWikiUrl = "https://en.wikipedia.org/wiki/";
 const int numWikiParagraphs = 5;
 const int numberOfResults = 5;

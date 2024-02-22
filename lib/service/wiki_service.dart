@@ -6,6 +6,7 @@ import 'package:html/parser.dart' as parser;
 
 import 'package:wwm/constants.dart' as constants;
 import 'package:wwm/sensitive.dart' as sensitive;
+import 'package:wwm/utility/utility.dart';
 
 class Entity {
   final String? title;
@@ -32,8 +33,7 @@ class Entity {
 class WikiService {
   Future<void> getEntityDetails(Entity entity) async {
     await Future.delayed(const Duration(seconds: 2));
-    final url =
-        Uri.parse("https://en.wikipedia.org/wiki/Grand_Rapids,_Michigan");
+    final url = Uri.parse(constants.rootWikiUrl + entity.wikiKey);
     final response = await http.get(url);
     if (response.statusCode == 200) {
       var document = parser.parse(response.body);
@@ -49,6 +49,7 @@ class WikiService {
       print("Something bad has happened! response code: " +
           response.statusCode.toString());
     }
+    entity.fullDescription = Utility.filterDescription(entity.fullDescription);
     print(entity.fullDescription);
   }
 
