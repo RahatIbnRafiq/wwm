@@ -32,7 +32,6 @@ class Entity {
 
 class WikiService {
   Future<void> getEntityDetails(Entity entity) async {
-    await Future.delayed(const Duration(seconds: 2));
     final url = Uri.parse(constants.rootWikiUrl + entity.wikiKey);
     final response = await http.get(url);
     if (response.statusCode == 200) {
@@ -50,7 +49,6 @@ class WikiService {
           response.statusCode.toString());
     }
     entity.fullDescription = Utility.filterDescription(entity.fullDescription);
-    print(entity.fullDescription);
   }
 
   Future<List<Entity>> getEntities(String searchString) async {

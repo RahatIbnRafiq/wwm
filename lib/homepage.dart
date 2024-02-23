@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:wwm/service/wiki_service.dart';
 import 'package:wwm/constants.dart' as constants;
 import 'package:wwm/widgets/search_result.dart';
+import 'package:wwm/widgets/wwm_drawer.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -34,6 +35,7 @@ class _HomepageState extends State<Homepage> {
       appBar: AppBar(
         title: const Text(constants.appTitle),
       ),
+      drawer: const WWMDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
