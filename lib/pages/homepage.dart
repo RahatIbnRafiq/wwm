@@ -4,6 +4,7 @@ import 'package:wwm/service/wiki_service.dart';
 import 'package:wwm/constants.dart' as constants;
 import 'package:wwm/widgets/search_result.dart';
 import 'package:wwm/widgets/wwm_drawer.dart';
+import 'package:wwm/models/entity_model.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'homepage.dart';
+import 'package:provider/provider.dart';
+import 'package:wwm/models/entities_model.dart';
+import 'pages/homepage.dart';
 import 'theme.dart';
+
+import 'package:wwm/constants.dart' as constants;
 
 void main() {
   runApp(const MyApp());
@@ -9,13 +13,15 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Walk With Me',
-      theme: myTheme,
-      home: const Homepage(),
+    return ChangeNotifierProvider(
+      create: (context) => EntitiesModel(),
+      child: MaterialApp(
+        title: constants.appTitle,
+        theme: myTheme,
+        home: const Homepage(),
+      ),
     );
   }
 }

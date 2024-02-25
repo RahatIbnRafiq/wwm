@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:wwm/constants.dart' as constants;
+
 class WWMDrawer extends StatelessWidget {
   const WWMDrawer({Key? key}) : super(key: key);
 
@@ -10,22 +12,14 @@ class WWMDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           const DrawerHeader(
-            child: Text('Drawer Header'),
-            decoration: BoxDecoration(
-              color: Colors.blue,
-            ),
+            child: Text(constants.drawerHeader),
           ),
           ListTile(
-            title: const Text('Item 1'),
-            onTap: () {
-              // Update the state of the app
-              // ...
-              // Then close the drawer
-              Navigator.pop(context);
-            },
+            title: const Text(constants.seeAllEntities),
+            onTap: () {},
           ),
           ListTile(
-            title: const Text('Item 2'),
+            title: const Text(constants.yourToursString),
             onTap: () {
               // // Update the state of the app
               // // ...
