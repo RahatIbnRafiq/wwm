@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:wwm/constants.dart' as constants;
+import 'package:wwm/pages/see_all_entities.dart';
 
 class WWMDrawer extends StatelessWidget {
   const WWMDrawer({Key? key}) : super(key: key);
@@ -16,7 +17,10 @@ class WWMDrawer extends StatelessWidget {
           ),
           ListTile(
             title: const Text(constants.seeAllEntities),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const SeeAllEntities()));
+            },
           ),
           ListTile(
             title: const Text(constants.yourToursString),

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:wwm/constants.dart' as constants;
 
-class SearchResult extends StatelessWidget {
+class EntityTile extends StatelessWidget {
   final String title;
   final String subtitle;
   final VoidCallback onAdd;
 
   // Constructor with named parameters, title and leading are required
-  const SearchResult(
+  const EntityTile(
       {Key? key,
       required this.title,
       required this.subtitle,

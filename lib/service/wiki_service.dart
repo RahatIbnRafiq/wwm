@@ -28,6 +28,7 @@ class WikiService {
           response.statusCode.toString());
     }
     entity.fullDescription = Utility.filterDescription(entity.fullDescription);
+    print("Item was added succesfully! The item was : " + entity.wikiTitle);
   }
 
   Future<List<Entity>> getEntities(String searchString) async {

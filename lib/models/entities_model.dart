@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:wwm/models/entity_model.dart';
 
 class EntitiesModel extends ChangeNotifier {
-  final List<String> _entities = [];
+  final List<Entity> _entities = [];
 
-  List<String> get items => _entities;
+  List<Entity> get entities => _entities;
 
-  void addItem(String item) {
-    _entities.add(item);
+  void addItem(Entity entity) {
+    _entities.add(entity);
     notifyListeners();
   }
 }
