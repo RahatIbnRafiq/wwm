@@ -7,32 +7,10 @@ import 'package:html/parser.dart' as parser;
 import 'package:wwm/constants.dart' as constants;
 import 'package:wwm/sensitive.dart' as sensitive;
 import 'package:wwm/utility/utility.dart';
-
-class Entity {
-  final String? title;
-  final String? shortDescription;
-  final String wikiKey;
-  String wikiTitle = "";
-  String fullDescription = "";
-
-  Entity({
-    required this.title,
-    required this.shortDescription,
-    required this.wikiKey,
-  });
-
-  factory Entity.fromJson(Map<String, dynamic> json) {
-    return Entity(
-      title: json['title'],
-      shortDescription: json['description'],
-      wikiKey: json['key'],
-    );
-  }
-}
+import 'package:wwm/models/entity_model.dart';
 
 class WikiService {
-  Future<void> getEntityDetails(Entity entity) async {
-    await Future.delayed(const Duration(seconds: 2));
+  Future<bool> getEntityDetails(Entity entity) async {
     final url = Uri.parse(constants.rootWikiUrl + entity.wikiKey);
     final response = await http.get(url);
     if (response.statusCode == 200) {
@@ -48,9 +26,11 @@ class WikiService {
     } else {
       print("Something bad has happened! response code: " +
           response.statusCode.toString());
+      return false;
     }
     entity.fullDescription = Utility.filterDescription(entity.fullDescription);
-    print(entity.fullDescription);
+    print("Item was added succesfully! The item was : " + entity.wikiTitle);
+    return true;
   }
 
   Future<List<Entity>> getEntities(String searchString) async {
