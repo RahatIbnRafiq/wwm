@@ -10,7 +10,7 @@ import 'package:wwm/utility/utility.dart';
 import 'package:wwm/models/entity_model.dart';
 
 class WikiService {
-  Future<void> getEntityDetails(Entity entity) async {
+  Future<bool> getEntityDetails(Entity entity) async {
     final url = Uri.parse(constants.rootWikiUrl + entity.wikiKey);
     final response = await http.get(url);
     if (response.statusCode == 200) {
@@ -26,9 +26,11 @@ class WikiService {
     } else {
       print("Something bad has happened! response code: " +
           response.statusCode.toString());
+      return false;
     }
     entity.fullDescription = Utility.filterDescription(entity.fullDescription);
     print("Item was added succesfully! The item was : " + entity.wikiTitle);
+    return true;
   }
 
   Future<List<Entity>> getEntities(String searchString) async {

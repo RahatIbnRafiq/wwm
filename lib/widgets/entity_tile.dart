@@ -6,13 +6,15 @@ class EntityTile extends StatelessWidget {
   final String title;
   final String subtitle;
   final VoidCallback onAdd;
+  final bool isDownloaded;
 
   // Constructor with named parameters, title and leading are required
   const EntityTile(
       {Key? key,
       required this.title,
       required this.subtitle,
-      required this.onAdd})
+      required this.onAdd,
+      required this.isDownloaded})
       : super(key: key);
 
   @override
@@ -20,11 +22,17 @@ class EntityTile extends StatelessWidget {
     return ListTile(
       title: Text(title), // Display title text
       subtitle: Text(subtitle),
-      trailing: IconButton(
-        icon: const Icon(Icons.playlist_add),
-        onPressed: onAdd,
-        tooltip: constants.addToPlaylist,
-      ),
+      trailing: isDownloaded
+          ? IconButton(
+              icon: const Icon(Icons.check),
+              onPressed: () {},
+              tooltip: "Downloaded",
+            )
+          : IconButton(
+              icon: const Icon(Icons.playlist_add),
+              onPressed: onAdd,
+              tooltip: constants.addToPlaylist,
+            ),
     );
   }
 }

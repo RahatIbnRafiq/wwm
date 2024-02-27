@@ -34,7 +34,7 @@ class _HomepageState extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
-    final entitiesModel = Provider.of<EntitiesModel>(context, listen: false);
+    final entitiesModel = Provider.of<EntitiesModel>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -81,14 +81,36 @@ class _HomepageState extends State<Homepage> {
                         title: entity.title ?? constants.titleUnavilable,
                         subtitle: entity.shortDescription ??
                             constants.descriptionUnavilable,
+                        isDownloaded: entitiesModel.isAdded(entity),
                         onAdd: () async {
-                          await wikiservice.getEntityDetails(entity);
-                          entitiesModel.addItem(entity);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                                content: Text(
-                                    'Added "${entity.wikiTitle}" to the list')),
-                          );
+                          if (entitiesModel.isAdded(entity)) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Item is already added'),
+                              ),
+                            );
+                          } else {
+                            bool wasSuccess =
+                                await wikiservice.getEntityDetails(entity);
+                            if (wasSuccess) {
+                              entitiesModel.addItem(entity);
+                              print("Current size of entity list: " +
+                                  entitiesModel.entities.length.toString());
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                      'Added "${entity.wikiTitle}" to the list'),
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                      'Something went wrong. Please try again!'),
+                                ),
+                              );
+                            }
+                          }
                         },
                       );
                     },

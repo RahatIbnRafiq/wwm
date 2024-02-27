@@ -20,12 +20,14 @@ class SeeAllEntities extends StatelessWidget {
       body: ListView.builder(
         itemCount: entities.length,
         itemBuilder: (context, index) {
-          Entity entity = entities[index];
+          String wikiKey = entities.keys.elementAt(index);
+          Entity? entity = entities[wikiKey];
           return EntityTile(
-            title: entity.title ?? constants.titleUnavilable,
+            title: entity?.title ?? constants.titleUnavilable,
             subtitle:
-                entity.shortDescription ?? constants.descriptionUnavilable,
+                entity?.shortDescription ?? constants.descriptionUnavilable,
             onAdd: () {},
+            isDownloaded: entity!.isDownloaded,
           );
         },
       ),

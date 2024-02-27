@@ -4,11 +4,13 @@ class Entity {
   final String wikiKey;
   String wikiTitle = "";
   String fullDescription = "";
+  final bool isDownloaded;
 
   Entity({
     required this.title,
     required this.shortDescription,
     required this.wikiKey,
+    required this.isDownloaded,
   });
 
   factory Entity.fromJson(Map<String, dynamic> json) {
@@ -16,6 +18,7 @@ class Entity {
       title: json['title'],
       shortDescription: json['description'],
       wikiKey: json['key'],
+      isDownloaded: false,
     );
   }
 }

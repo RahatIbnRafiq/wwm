@@ -2,12 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:wwm/models/entity_model.dart';
 
 class EntitiesModel extends ChangeNotifier {
-  final List<Entity> _entities = [];
+  final Map<String, Entity> _entities = {};
 
-  List<Entity> get entities => _entities;
+  Map<String, Entity> get entities => _entities;
 
   void addItem(Entity entity) {
-    _entities.add(entity);
+    if (_entities.containsKey(entity.wikiKey)) {
+      print("Its already added!!!");
+    } else {
+      // Add a new item if it does not exist
+      _entities[entity.wikiKey] = entity;
+    }
     notifyListeners();
+  }
+
+  bool isAdded(Entity entity) {
+    return _entities.containsKey(entity.wikiKey);
   }
 }
