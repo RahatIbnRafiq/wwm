@@ -8,7 +8,6 @@ class EntitiesModel extends ChangeNotifier {
 
   void addItem(Entity entity) {
     if (_entities.containsKey(entity.wikiKey)) {
-      print("Its already added!!!");
     } else {
       // Add a new item if it does not exist
       _entities[entity.wikiKey] = entity;

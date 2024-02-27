@@ -94,8 +94,6 @@ class _HomepageState extends State<Homepage> {
                                 await wikiservice.getEntityDetails(entity);
                             if (wasSuccess) {
                               entitiesModel.addItem(entity);
-                              print("Current size of entity list: " +
-                                  entitiesModel.entities.length.toString());
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
